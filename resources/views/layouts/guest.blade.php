@@ -5,11 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', 'Admin - Website Desa PasirLangu')</title>
+    <title>Admin - Website Desa PasirLangu</title>
 
+    <!-- Bootstrap CSS from CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    
+    <!-- Custom CSS untuk Desain Split-Screen -->
     <style>
+        html, body {
+            height: 100%;
+        }
         .auth-container {
             display: flex;
             min-height: 100vh;
@@ -29,11 +34,11 @@
             justify-content: center;
             align-items: center;
             background-color: #ffffff;
+            padding: 2rem;
         }
         .auth-form-wrapper {
             width: 100%;
-            max-width: 400px; /* Lebar form */
-            padding: 2rem;
+            max-width: 400px;
         }
         .form-control {
             border-radius: 0.5rem;
@@ -67,10 +72,12 @@
 </head>
 <body class="font-sans text-gray-900 antialiased">
     <div class="auth-container">
+        <!-- Kolom Kiri (Gambar) -->
         <div class="col-md-7 d-none d-md-flex auth-image-section">
-            Foto Desa Pasirlayu
+            Foto Desa Pasirlangu
         </div>
-
+        
+        <!-- Kolom Kanan (Form) -->
         <div class="col-12 col-md-5 auth-form-section">
             <div class="auth-form-wrapper">
                 {{ $slot }}
