@@ -9,7 +9,13 @@
         <div class="col-lg-4">
             <div class="card shadow-sm">
                 <div class="card-header bg-primary text-white">
-                    <h4>Tambah Produk Baru</h4>
+                    <h4>
+                        @if(Auth::user()->role == 'admin')
+                            Tambah Produk (Admin)
+                        @else
+                            Tambah Produk Baru
+                        @endif
+                    </h4>
                 </div>
                 <div class="card-body">
                     @if (session('success'))
@@ -60,7 +66,13 @@
         <div class="col-lg-8">
             <div class="card shadow-sm">
                 <div class="card-header">
-                    <h4>Daftar Produk Anda</h4>
+                    <h4>
+                        @if(Auth::user()->role == 'admin')
+                            Daftar Semua Produk
+                        @else
+                            Daftar Produk Anda
+                        @endif
+                    </h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -69,15 +81,23 @@
                                 <tr>
                                     <th>Gambar</th>
                                     <th>Nama Produk</th>
+                                    {{-- Kolom 'Penjual' hanya muncul untuk admin --}}
+                                    @if(Auth::user()->role == 'admin')
+                                        <th>Penjual</th>
+                                    @endif
                                     <th>Harga</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                {{-- Variabel diubah dari $users menjadi $products --}}
                                 @forelse ($products as $product)
                                     <tr>
                                         <td><img src="{{ asset('storage/' . $product->image_url) }}" alt="{{ $product->name }}" width="60" class="rounded"></td>
                                         <td>{{ $product->name }}</td>
+                                        @if(Auth::user()->role == 'admin')
+                                            <td>{{ $product->user->name }}</td>
+                                        @endif
                                         <td>{{ $product->price }}</td>
                                         <td>
                                             <form action="{{ route('admin.products.destroy', $product) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">
@@ -89,7 +109,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="text-center text-muted">Anda belum menambahkan produk.</td>
+                                        <td colspan="5" class="text-center text-muted">Belum ada produk.</td>
                                     </tr>
                                 @endforelse
                             </tbody>

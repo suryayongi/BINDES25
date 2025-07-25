@@ -41,14 +41,13 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'phone_number' => $request->phone_number,
             'password' => Hash::make($request->password),
-            // 'role' akan otomatis terisi 'pembeli' dari default di database
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        // Ganti tujuan redirect ke '/etalase'
-        return redirect('/etalase');
+        // Diubah agar mengarah ke '/dashboard'
+        return redirect('/dashboard');
     }
 }
