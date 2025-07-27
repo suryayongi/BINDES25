@@ -47,7 +47,7 @@
                Biro Dedikasi Masyarakat HMSI Telkom University
             </p>
             <p class="mb-0 small">
-                Powered by: <span class="fw-bold">LangWasHere 2025</span>
+                Powered by: <span class="fw-bold">LangWasHere</span>
             </p>
         </div>
     </footer>
