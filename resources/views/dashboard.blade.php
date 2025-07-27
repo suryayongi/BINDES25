@@ -57,8 +57,8 @@
                     <div class="col-md-4 mb-4">
                         <div class="card h-100">
                             <div class="card-body text-center">
-                                <h5 class="card-title">Kelola Produk Anda</h5>
-                                <p class="card-text">Tambah, lihat, atau edit produk yang Anda jual di etalase.</p>
+                                <h5 class="card-title">UMKM Pasirlangu</h5>
+                                <p class="card-text">Silahkan Lihat List Produk UMKM.</p>
                                 <a href="{{ route('admin.products.index') }}" class="btn btn-success">Kelola Produk</a>
                             </div>
                         </div>

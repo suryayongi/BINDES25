@@ -35,10 +35,17 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Grup rute untuk penjual & admin (Kelola Produk)
-    Route::middleware('can:manage-products')->group(function () {
+    // --- GRUP RUTE PRODUK YANG DIPERBARUI ---
+    // Middleware ini sekarang menggunakan Policy untuk memeriksa apakah user (Admin/Penjual) boleh melihat halaman ini
+    Route::middleware('can:viewAny,App\Models\Product')->group(function () {
         Route::get('/admin/products', [ProductController::class, 'index'])->name('admin.products.index');
         Route::post('/admin/products', [ProductController::class, 'store'])->name('admin.products.store');
+        
+        // Rute baru untuk menampilkan halaman edit
+        Route::get('/admin/products/{product}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
+        // Rute baru untuk memproses update
+        Route::patch('/admin/products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
+
         Route::delete('/admin/products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
     });
 
