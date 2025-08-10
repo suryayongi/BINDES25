@@ -32,7 +32,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', [ProductController::class, 'create'])->name('create');
         Route::post('/', [ProductController::class, 'store'])->name('store');
         Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('edit');
-        Route::put('/{product}', [ProductController::class, 'update'])->name('update');
+        // DIUBAH DARI PUT MENJADI PATCH
+        Route::patch('/{product}', [ProductController::class, 'update'])->name('update');
         Route::delete('/{product}', [ProductController::class, 'destroy'])->name('destroy');
         Route::patch('/{product}/featured', [ProductController::class, 'toggleFeatured'])->name('featured');
     });
