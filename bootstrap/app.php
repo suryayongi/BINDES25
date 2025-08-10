@@ -11,12 +11,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // --- INI BAGIAN YANG KITA UBAH ---
-        // Mendaftarkan alias 'admin' untuk middleware IsAdmin
+        // TAMBAHKAN KODE DI BAWAH INI
         $middleware->alias([
-            'admin' => \App\Http\Middleware\IsAdmin::class,
+            'isAdmin' => \App\Http\Middleware\IsAdmin::class,
         ]);
-        // ---------------------------------
+        // ------------------------------------
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

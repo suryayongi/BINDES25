@@ -6,12 +6,6 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-*/
-
 // Rute Publik
 Route::get('/', [PageController::class, 'welcome'])->name('home');
 Route::get('/etalase', [PageController::class, 'etalase'])->name('etalase');
@@ -46,7 +40,7 @@ Route::middleware('auth')->group(function () {
     // GRUP RUTE KHUSUS ADMIN (Manajemen User)
     Route::middleware('isAdmin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('users', [AdminController::class, 'index'])->name('users.index');
-        Route::patch('users/{user}/role', [AdminController::class, 'updateUserRole'])->name('users.updateRole');
+        Route::patch('users/{user}/role', [AdminController::class, 'updateUserRole'])->name('users.update');
     });
 
 });

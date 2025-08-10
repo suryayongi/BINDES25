@@ -11,7 +11,9 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        // Ambil semua user KECUALI yang memiliki role 'admin'
+        $users = User::where('role', '!=', 'admin')->get();
+        
         return view('admin.users.index', compact('users'));
     }
 
