@@ -8,9 +8,7 @@
     <div class="py-5">
         <div class="container">
 
-            {{-- ====================================================== --}}
-            {{-- KONTEN DINAMIS BERDASARKAN ROLE USER --}}
-            {{-- ====================================================== --}}
+
 
             @if(Auth::user()->role == 'pembeli')
 
@@ -33,7 +31,7 @@
                     <div class="col-lg-5">
                         <div class="h-100 p-5 bg-dark rounded-3 shadow-sm text-white">
                             <h2>Lokasi Kami</h2>
-                            <p>Temukan kami di peta dan rasakan langsung suasana sejuk Desa PasirLangu.</p>
+                            <p>Temukan kami di peta dan rasakan langsung suasana sejuk Desa Pasirlangu.</p>
                             <div class="map-container" style="padding-bottom: 75%; border-radius: .3rem; position: relative; width: 100%; height: 0; overflow: hidden;">
                                 {{-- URL Peta yang sudah diperbaiki --}}
                                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15843.43594199852!2d107.55019809647036!3d-6.909503418525701!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e61e73a95a2d%3A0x1c36b0abe2c5c163!2sPasirlangu%2C%20Kec.%20Cisarua%2C%20Kabupaten%20Bandung%20Barat%2C%20Jawa%20Barat!5e0!3m2!1sid!2sid!4v1721900000000!5m2!1sid!2sid" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>

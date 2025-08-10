@@ -5,53 +5,60 @@
 @push('styles')
 <style>
     .hero-section {
-        /* PERUBAHAN DI SINI: Mengambil gambar dari folder public/images */
-        /* Ganti 'foto-desa.jpg' dengan nama file fotomu */
         background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("{{ asset('images/bru tlmw (1).png') }}");
         background-size: cover;
         background-position: center;
         color: white;
-        padding: 6rem 0;
-        text-align: center;
     }
-    .map-container {
-        position: relative;
-        width: 100%;
-        padding-bottom: 50%;
-        height: 0;
-        overflow: hidden;
-        border-radius: .5rem;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    .product-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border: none;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
-    .map-container iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border: 0;
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
     }
-    .feature-icon {
-        font-size: 3rem;
-        color: #0d6efd;
-    }
+    .card-img-top { height: 200px; object-fit: cover; }
+    .map-container { position: relative; width: 100%; padding-bottom: 50%; height: 0; overflow: hidden; border-radius: .5rem; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    .map-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .feature-icon { font-size: 3rem; color: #0d6efd; }
 </style>
 @endpush
 
 @section('content')
-    {{-- Hero Section untuk Tamu --}}
-    <div class="hero-section rounded-3 mb-5">
+    {{-- Hero Section --}}
+    <div class="hero-section text-center py-5 rounded-3 mb-5">
         <div class="container">
             <h1 class="display-4 fw-bold">Temukan Harta Karun Tersembunyi dari PasirLangu</h1>
-            <p class="fs-4 col-md-8 mx-auto">Setiap produk adalah cerita, setiap pembelian adalah dukungan. Masuk untuk menjadi bagian dari perjalanan kami.</p>
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <a href="{{ route('login') }}" class="btn btn-primary btn-lg px-4 gap-3">Login</a>
-                <a href="{{ route('register') }}" class="btn btn-outline-light btn-lg px-4">Register</a>
-            </div>
+            <p class="fs-4 col-md-8 mx-auto">Setiap produk adalah cerita, setiap pembelian adalah dukungan. Jelajahi etalase kami dan jadilah bagian dari perjalanan warga lokal.</p>
+            <a href="{{ route('etalase') }}" class="btn btn-primary btn-lg px-4">Lihat Semua Produk</a>
         </div>
     </div>
 
-    {{-- Fitur Unggulan untuk Marketing --}}
+    {{-- Produk Unggulan --}}
+    @if($featuredProducts->isNotEmpty())
+    <div class="container px-4 py-5">
+        <h2 class="pb-2 border-bottom text-center fw-bold">Produk Unggulan Kami</h2>
+        <div class="row g-4 py-5">
+            @foreach($featuredProducts as $product)
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 product-card">
+                    <img src="{{ asset('storage/' . $product->image_url) }}" class="card-img-top" alt="{{ $product->name }}">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ $product->name }}</h5>
+                        <p class="card-text text-muted small">{{ Str::limit($product->description, 70) }}</p>
+                        <p class="card-text fs-5 fw-bold text-primary mt-auto">{{ $product->price }}</p>
+                        <a href="{{ $product->product_url }}" target="_blank" class="btn btn-success mt-2">Lihat di Shopee</a>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+    @endif
+
+    {{-- Fitur Unggulan untuk Marketing (Ditambahkan Kembali) --}}
     <div class="container px-4 py-5 text-center">
         <h2 class="pb-2 border-bottom">Kenapa Harus Jelajah?</h2>
         <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
@@ -85,7 +92,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15843.43594199852!2d107.55019809647036!3d-6.909503418525701!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e61e73a95a2d%3A0x1c36b0abe2c5c163!2sPasirlangu%2C%20Kec.%20Cisarua%2C%20Kabupaten%20Bandung%20Barat%2C%20Jawa%20Barat!5e0!3m2!1sid!2sid!4v1721900000000!5m2!1sid!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15843.43594199852!2d107.55019809647036!3d-6.909503418525701!2m3!1f0!2f0!3f0!3m2!i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e61e73a95a2d%3A0x1c36b0abe2c5c163!2sPasirlangu%2C%20Kec.%20Cisarua%2C%20Kabupaten%20Bandung%20Barat%2C%20Jawa%20Barat!5e0!3m2!1sid!2sid!4v1721900000000!5m2!1sid!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>

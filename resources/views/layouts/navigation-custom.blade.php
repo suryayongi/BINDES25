@@ -6,22 +6,20 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {{-- Link ini sekarang bisa dilihat semua orang --}}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('etalase') }}">Etalase</a>
+                </li>
                 @auth
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('etalase') }}">Etalase</a>
                     </li>
                 @endauth
             </ul>
             <ul class="navbar-nav ms-auto">
                 @guest
                     <li class="nav-item">
-                        <a href="{{ route('login') }}" class="nav-link">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('register') }}" class="nav-link">Register</a>
+                        <a href="{{ route('login') }}" class="nav-link">Login Penjual/Admin</a>
                     </li>
                 @else
                     <li class="nav-item dropdown">
@@ -32,7 +30,7 @@
                             @if(Auth::user()->role == 'admin')
                                 <li><a class="dropdown-item" href="{{ route('admin.users.index') }}">Manajemen User</a></li>
                             @endif
-                            @can('manage-products')
+                            @can('viewAny', App\Models\Product::class)
                                 <li><a class="dropdown-item" href="{{ route('admin.products.index') }}">Kelola Produk</a></li>
                             @endcan
                             <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a></li>

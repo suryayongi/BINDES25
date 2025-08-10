@@ -13,10 +13,11 @@ class Product extends Model
     protected $fillable = [
         'name',
         'price',
-        'description', // Ditambahkan
+        'description', 
         'image_url',
         'product_url',
-        'user_id', // Ditambahkan
+        'user_id',
+        'is_featured', 
     ];
 
     /**
