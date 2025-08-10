@@ -9,30 +9,29 @@ use Illuminate\View\View;
 class PageController extends Controller
 {
     /**
-     * Menampilkan halaman utama (welcome) untuk semua pengunjung.
+     * Menampilkan halaman utama (welcome).
      */
     public function welcome(): View
     {
-        // Logika untuk menampilkan produk unggulan di halaman utama
         $featuredProducts = Product::where('is_featured', true)->inRandomOrder()->take(6)->get();
-        
         return view('welcome', ['featuredProducts' => $featuredProducts]);
     }
 
     /**
-     * Menampilkan halaman etalase dengan fungsionalitas search.
+     * Menampilkan halaman etalase dengan produk yang dikelompokkan per penjual.
      */
     public function etalase(Request $request): View
     {
-        $query = Product::query()->with('user');
+        $query = Product::with('user')->latest();
 
-        // Logika untuk search
+        // Logika search jika ada
         if ($request->has('search') && $request->search != '') {
             $query->where('name', 'like', '%' . $request->search . '%');
         }
 
-        $products = $query->latest()->get();
+        // Ambil semua produk yang cocok, LALU kelompokkan berdasarkan user_id penjual
+        $productsBySeller = $query->get()->groupBy('user_id');
 
-        return view('pages.etalase', compact('products'));
+        return view('pages.etalase', compact('productsBySeller'));
     }
 }
