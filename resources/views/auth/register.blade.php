@@ -1,56 +1,57 @@
 <x-guest-layout>
-    <h2 class="auth-title">Silahkan Register</h2>
+    <h2 class="text-center fw-bold mb-4" style="color: var(--text-dark);">Daftar Akun Baru</h2>
+
+    {{-- BLOK UNTUK MENAMPILKAN SEMUA ERROR VALIDASI --}}
+    @if ($errors->any())
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Oops! Terjadi kesalahan.</h4>
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
-        <!-- Name -->
         <div class="mb-3">
-            <label for="name" class="form-label">Nama Lengkap *</label>
-            <input id="name" class="form-control" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" placeholder="Contoh: Asep Sutisna">
-            <x-input-error :messages="$errors->get('name')" class="mt-2 text-danger" />
+            <label for="name" class="form-label">Nama Lengkap</label>
+            <input id="name" class="form-control @error('name') is-invalid @enderror" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name" />
         </div>
 
-        <!-- Email Address -->
         <div class="mb-3">
-            <label for="email" class="form-label">Email *</label>
-            <input id="email" class="form-control" type="email" name="email" :value="old('email')" required autocomplete="username" placeholder="contoh@email.com">
-            <x-input-error :messages="$errors->get('email')" class="mt-2 text-danger" />
+            <label for="email" class="form-label">Alamat Email</label>
+            <input id="email" class="form-control @error('email') is-invalid @enderror" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" />
         </div>
 
-        <!-- Phone Number -->
         <div class="mb-3">
-            <label for="phone_number" class="form-label">Nomor Telepon *</label>
-            <div class="input-group">
-                <span class="input-group-text">+62</span>
-                <input id="phone_number" class="form-control" type="text" name="phone_number" :value="old('phone_number')" required placeholder="8xx xxxx xxxx">
-            </div>
-             <x-input-error :messages="$errors->get('phone_number')" class="mt-2 text-danger" />
+            <label for="phone_number" class="form-label">Nomor Telepon</label>
+            <input id="phone_number" class="form-control @error('phone_number') is-invalid @enderror" type="text" name="phone_number" value="{{ old('phone_number') }}" required autocomplete="tel" placeholder="Contoh: 081234567890" />
         </div>
 
-        <!-- Password -->
         <div class="mb-3">
-            <label for="password" class="form-label">Password *</label>
-            <input id="password" class="form-control" type="password" name="password" required autocomplete="new-password">
-            <x-input-error :messages="$errors->get('password')" class="mt-2 text-danger" />
+            <label for="password" class="form-label">Password</label>
+            <input id="password" class="form-control @error('password') is-invalid @enderror" type="password" name="password" required autocomplete="new-password" />
+            <div id="passwordHelp" class="form-text">Minimal 8 karakter.</div>
         </div>
 
-        <!-- Confirm Password -->
         <div class="mb-3">
-            <label for="password_confirmation" class="form-label">Konfirmasi Password *</label>
-            <input id="password_confirmation" class="form-control" type="password" name="password_confirmation" required autocomplete="new-password">
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-danger" />
+            <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
+            <input id="password_confirmation" class="form-control" type="password" name="password_confirmation" required autocomplete="new-password" />
         </div>
-        
-        <!-- Tombol Register -->
+
         <div class="d-grid mt-4">
-            <button type="submit" class="btn btn-custom">
-                Register
+             <button type="submit" class="btn btn-custom-red">
+                {{ __('Daftar') }}
             </button>
         </div>
-    </form>
 
-    <p class="text-center mt-4">
-        Sudah punya akun? <a href="{{ route('login') }}" class="text-decoration-none">Login Sekarang</a>
-    </p>
+        <div class="text-center mt-3">
+            <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}" style="text-decoration: none;">
+                Sudah punya akun? Masuk
+            </a>
+        </div>
+    </form>
 </x-guest-layout>

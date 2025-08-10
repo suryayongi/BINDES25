@@ -32,14 +32,14 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'phone_number' => ['required', 'string', 'max:15'],
+            'phone_number' => ['required', 'string', 'max:15'], // Validasi untuk nomor HP
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'phone_number' => $request->phone_number,
+            'phone_number' => $request->phone_number, // Simpan nomor HP ke database
             'password' => Hash::make($request->password),
         ]);
 
@@ -47,7 +47,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        // Diubah agar mengarah ke '/dashboard'
         return redirect('/dashboard');
     }
 }

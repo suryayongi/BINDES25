@@ -1,0 +1,78 @@
+/* Import Font dari Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Variabel Warna Utama */
+:root {
+    --primary-maroon: #8B1E24;
+    --primary-red: #D33A3A;
+    --primary-yellow: #FFB800;
+    --text-white: #FFFFFF;
+    --text-dark: #333333;
+    --text-green: #008000;
+    --bg-light-gray: #f8f9fa;
+}
+
+/* Style Dasar */
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+}
+
+/* Navbar Custom */
+.navbar-custom {
+    background-color: var(--primary-maroon);
+    padding: 1rem 1.5rem;
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+    color: var(--text-white);
+    font-weight: 500;
+}
+
+.navbar-custom .nav-link:hover {
+    color: var(--primary-yellow);
+}
+
+.navbar-custom .nav-item.active .nav-link {
+    background-color: var(--primary-red);
+    border-radius: 8px;
+    color: var(--text-white);
+}
+
+/* Footer Custom */
+.footer-custom {
+    background-color: var(--primary-maroon);
+    color: var(--text-white);
+    padding: 2rem 0;
+    margin-top: 4rem;
+}
+
+/* Tombol Custom */
+.btn-custom-yellow {
+    background-color: var(--primary-yellow);
+    color: var(--text-dark);
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    border: none;
+}
+
+.btn-custom-yellow:hover {
+    background-color: #e6a600;
+    color: var(--text-dark);
+}
+
+.btn-custom-red {
+    background-color: var(--primary-red);
+    color: var(--text-white);
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    border: none;
+}
+
+.btn-custom-red:hover {
+    background-color: #b02a2a;
+    color: var(--text-white);
+}
