@@ -12,37 +12,41 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-// Halaman utama (welcome) sekarang menjadi publik untuk semua
+// Rute Publik
 Route::get('/', [PageController::class, 'welcome'])->name('home');
-
-// Halaman etalase juga menjadi publik
 Route::get('/etalase', [PageController::class, 'etalase'])->name('etalase');
 
-// Dashboard hanya untuk yang sudah login
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Rute Autentikasi Bawaan
+require __DIR__.'/auth.php';
 
-// Grup rute yang butuh login
+// Rute yang Membutuhkan Login
 Route::middleware('auth')->group(function () {
+
+    // Rute Dashboard
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->middleware('verified')->name('dashboard');
+
+    // Rute Profil
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::middleware('can:viewAny,App\Models\Product')->group(function () {
-        Route::get('/admin/products', [ProductController::class, 'index'])->name('admin.products.index');
-        Route::post('/admin/products', [ProductController::class, 'store'])->name('admin.products.store');
-        Route::get('/admin/products/{product}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
-        Route::patch('/admin/products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
-        Route::delete('/admin/products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
-        // Rute baru untuk toggle featured product
-        Route::patch('/admin/products/{product}/featured', [ProductController::class, 'toggleFeatured'])->name('admin.products.featured');
+    // GRUP RUTE PRODUK (Untuk Admin & Penjual)
+    Route::prefix('admin/products')->name('admin.products.')->group(function () {
+        Route::get('/', [ProductController::class, 'index'])->name('index');
+        Route::get('/create', [ProductController::class, 'create'])->name('create');
+        Route::post('/', [ProductController::class, 'store'])->name('store');
+        Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('edit');
+        Route::put('/{product}', [ProductController::class, 'update'])->name('update');
+        Route::delete('/{product}', [ProductController::class, 'destroy'])->name('destroy');
+        Route::patch('/{product}/featured', [ProductController::class, 'toggleFeatured'])->name('featured');
     });
 
-    Route::middleware('admin')->group(function () {
-        Route::get('/admin/users', [AdminController::class, 'index'])->name('admin.users.index');
-        Route::patch('/admin/users/{user}', [AdminController::class, 'updateRole'])->name('admin.users.update');
+    // GRUP RUTE KHUSUS ADMIN (Manajemen User)
+    Route::middleware('isAdmin')->prefix('admin')->name('admin.')->group(function () {
+        Route::get('users', [AdminController::class, 'index'])->name('users.index');
+        Route::patch('users/{user}/role', [AdminController::class, 'updateUserRole'])->name('users.updateRole');
     });
+
 });
-
-require __DIR__.'/auth.php';

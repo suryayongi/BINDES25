@@ -9,27 +9,26 @@ use Illuminate\Auth\Access\Response;
 class ProductPolicy
 {
     /**
-     * Izinkan admin melakukan apa saja (kecuali membuat, mengedit, menghapus).
-     */
-    public function before(User $user, string $ability): bool|null
-    {
-        if ($user->role === 'admin') {
-            // Admin boleh melihat, tapi tidak boleh melakukan aksi lain
-            return in_array($ability, ['viewAny']);
-        }
-        return null;
-    }
-
-    /**
-     * Tentukan apakah user bisa melihat halaman kelola produk.
+     * Tentukan apakah user bisa melihat SEMUA produk (halaman index).
+     * Diizinkan untuk admin DAN penjual.
      */
     public function viewAny(User $user): bool
     {
-        return in_array($user->role, ['admin', 'penjual']);
+        return $user->role === 'admin' || $user->role === 'penjual';
+    }
+
+    /**
+     * Tentukan apakah user bisa melihat SATU produk spesifik.
+     */
+    public function view(User $user, Product $product): bool
+    {
+        // Izinkan jika user adalah admin ATAU pemilik produk
+        return $user->role === 'admin' || $user->id === $product->user_id;
     }
 
     /**
      * Tentukan apakah user bisa membuat produk baru.
+     * Hanya penjual yang bisa.
      */
     public function create(User $user): bool
     {
@@ -41,16 +40,16 @@ class ProductPolicy
      */
     public function update(User $user, Product $product): bool
     {
-        // Hanya boleh jika produk ini milik user tersebut DAN role-nya adalah penjual
-        return $user->id === $product->user_id && $user->role === 'penjual';
+        // Izinkan jika user adalah admin ATAU pemilik produk
+        return $user->role === 'admin' || $user->id === $product->user_id;
     }
 
     /**
      * Tentukan apakah user bisa menghapus produk.
      */
-    public function delete(User $user, Product $product): bool
+    public function destroy(User $user, Product $product): bool
     {
-        // Hanya boleh jika produk ini milik user tersebut DAN role-nya adalah penjual
-        return $user->id === $product->user_id && $user->role === 'penjual';
+        // Izinkan jika user adalah admin ATAU pemilik produk
+        return $user->role === 'admin' || $user->id === $product->user_id;
     }
 }

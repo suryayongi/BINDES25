@@ -87,7 +87,7 @@
             <div class="row align-items-center g-5">
                 <div class="col-lg-5 text-center">
                     {{-- Ganti 'https://via.placeholder.com/400' dengan path gambar kepala desa jika sudah ada --}}
-                    <img src="https://via.placeholder.com/400" alt="Foto Kepala Desa Pasirlangu">
+                    <img src="{{ asset('images/bru tlmw (1).png') }}" alt="Foto Kepala Desa Pasirlangu">
                 </div>
                 <div class="col-lg-7">
                     <h3 class="fw-bold">Kepala Desa Pasirlangu</h3>
